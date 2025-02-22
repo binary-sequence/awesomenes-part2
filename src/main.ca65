@@ -1,0 +1,68 @@
+.exportzp ball_dx
+.exportzp ball_dy
+.exportzp ball_x_direction
+.exportzp ball_y_direction
+.exportzp delay_palette_rotation
+.exportzp demo_state
+.exportzp frame_count
+.exportzp ppu_ctrl
+.exportzp ppu_mask
+.exportzp ppu_scroll_x
+.exportzp ppu_scroll_y
+.exportzp ptr_palette
+.exportzp ptr_snow
+.exportzp ptr_snow_transition
+.export demo_song
+.export main
+.export noise_pal
+.export seconds
+
+.include "nes_constants.inc"
+.include "demo_constants.inc"
+.include "header.inc"
+.include "../res/famistudio_ca65.s"
+
+.import irq_handler
+.import nmi_handler
+.import reset_handler
+.import rf_noise_init
+
+
+.segment "ZEROPAGE"
+  delay_palette_rotation: .res 1  ; even: don't delay, odd: delay
+  demo_state: .res 1  ; enum DemoState
+  frame_count: .res 1  ; [0, FPS)
+  seconds: .res 1  ; [0, 255] (4 minutes))
+  ppu_ctrl: .res 1
+  ppu_mask: .res 1
+  ppu_scroll_x: .res 1
+  ppu_scroll_y: .res 1
+  ptr_palette: .res 2
+  ptr_snow: .res 2
+  ptr_snow_transition: .res 2
+  ball_dx: .res 1
+  ball_x_direction: .res 1
+  ball_y_direction: .res 1
+  ball_dy: .res 1
+
+
+.segment "RODATA"
+  noise_pal: .incbin "../res/noise.pal"
+  demo_song: .include "../res/awesomenes-part2.s"
+
+
+.segment "VECTORS"
+  .addr nmi_handler, reset_handler, irq_handler
+
+
+.segment "CHR"
+  .incbin "../res/pattern_tables.chr"
+
+
+.segment "CODE"
+
+  .proc main
+    JSR rf_noise_init
+
+    forever: jmp forever
+  .endproc
