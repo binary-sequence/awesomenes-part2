@@ -48,7 +48,7 @@
 
 .segment "RODATA"
   noise_pal: .incbin "../res/noise.pal"
-  demo_song: .include "../res/awesomenes-part2.s"
+  demo_song: .include "../res/awesomenes-part2.ca65.s"
 
 
 .segment "VECTORS"

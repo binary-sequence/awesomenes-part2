@@ -24,7 +24,7 @@ build/dist/$(ROM_NAME): $(OBJECTS) $(NES_CFG) | build/dist
 build/dist:
 	mkdir -p build/dist
 
-$(OBJECTS): build/obj/%.o: src/%.ca65 $(RESOURCES) | build/obj
+$(OBJECTS): build/obj/%.o: src/%.ca65.s $(RESOURCES) | build/obj
 	$(AS) -o $@ $<
 
 build/obj:
@@ -56,7 +56,7 @@ build/debug/$(ROM_NAME): $(DEBUG_OBJECTS) $(NES_CFG) | build/debug
 build/debug:
 	mkdir -p build/debug
 
-$(DEBUG_OBJECTS): build/debug/%.o: src/%.ca65 $(RESOURCES) | build/debug
+$(DEBUG_OBJECTS): build/debug/%.o: src/%.ca65.s $(RESOURCES) | build/debug
 	$(AS) -g -o $@ $<
 ########################################################################
 
